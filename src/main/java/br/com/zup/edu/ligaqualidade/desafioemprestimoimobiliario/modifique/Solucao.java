@@ -21,16 +21,15 @@ public class Solucao {
           run(proposalList, message);
       };
 
-      boolean success = false;
 
       for(Proposal proposal: proposalList){
-          success = proposal.getProposalLoanValue().compareTo(BigDecimal.valueOf(30000)) > 0 &&
-                  proposal.getProposalLoanValue().compareTo(BigDecimal.valueOf(30000)) < 0 ? true : false;
-          success = proposal.getProposalNumberOfMonthlyInstallments()>=24 && proposal.getProposalNumberOfMonthlyInstallments()<=180 ? true: false;
-          if (success) checkProposalList.add(proposal);
-          success = false;
+          if (CheckProposal.approved(checkProposalList, proposal)) {
+              checkProposalList.add(proposal);
+          }
       }
 
 	  return checkProposalList.stream().map(proposal -> proposal.getId().toString()).collect(Collectors.joining(DELIMITER));
   }
+
+
 }
